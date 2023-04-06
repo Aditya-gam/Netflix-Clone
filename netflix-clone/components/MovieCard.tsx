@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useRouter } from "next/router";
 
 import { BsFillPlayFill } from "react-icons/bs";
 import FavoriteButton from "./FavoriteButton";
@@ -7,6 +8,12 @@ interface MovieCardProps {
   data: Record<string, any>;
 }
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
+  const router = useRouter();
+
+  const redirectToWatch = useCallback(
+    () => router.push(`/watch/${data.id}`),
+    [router, data.id]
+  );
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
@@ -25,7 +32,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
         <div className="z-10 bd-zinc-800 p-2 lg:p-4 absolute w-full transition shadow-md rounded-b-md">
           <div className="flex flex-row items-center gap-3">
             <div
-              onClick={() => {}}
+              onClick={redirectToWatch}
               className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
             >
               <BsFillPlayFill size={30} className="text-black w-4 lg:w-6" />
